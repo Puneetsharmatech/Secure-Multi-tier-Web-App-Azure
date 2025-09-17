@@ -1,79 +1,51 @@
-# Secure Multi-Tier Web Application on Azure with Terraform and GitHub Actions 🔒🌐
+# Secure-Multi-tier-Web-App-Azure
 
-### Project Overview
+### 🌐 Project Overview
 
-This project demonstrates the design, deployment, and automation of a secure, highly-available, multi-tier web application on Microsoft Azure. The entire infrastructure is defined as code using **Terraform** and deployed via a **Continuous Integration/Continuous Deployment (CI/CD)** pipeline using **GitHub Actions**.
+This project demonstrates the design and deployment of a secure, highly-available, multi-tier web application on **Microsoft Azure**. The entire infrastructure is defined using **Terraform** and automatically deployed via **GitHub Actions** CI/CD pipelines. It showcases key DevOps and cloud engineering practices, including Infrastructure as Code (IaC), robust network security, and automated deployments.
 
-The architecture consists of a public-facing web front-end and a private, isolated database back-end. The solution emphasizes security by implementing network segmentation, a Web Application Firewall (WAF), and centralized secrets management.
+---
 
-<br>
+### 🏛️ Architecture
 
-<br>
+Our application is a simple CRUD web app protected by a **Web Application Firewall (WAF)**. The database is secured with a **private endpoint**, ensuring it's never publicly accessible. All secrets are managed via **Azure Key Vault**.
 
-***
+![Architectural Diagram](https://i.imgur.com/your-diagram-image-link.png)
 
-### Architecture Breakdown
+* **Azure Application Gateway**: Acts as the single public entry point with an integrated WAF.
+* **Virtual Network (VNet)**: Segments the network with dedicated subnets for the web and database tiers.
+* **Azure App Service**: Hosts the web application within a private subnet.
+* **Azure Database**: A managed database service (e.g., PostgreSQL) accessible only from within the VNet.
+* **Azure Private Endpoint**: Connects the web app to the database securely over the private network.
+* **Azure Key Vault**: Stores sensitive information like the database connection string.
 
-The application is built on the following core Azure services, all provisioned and managed by Terraform:
+---
 
-* **Virtual Network (VNet) & Subnets**: A logically isolated network with separate subnets for the web and database tiers, enforcing network segmentation.
-* **Network Security Groups (NSGs)**: Applied to each subnet to filter network traffic, ensuring only necessary communication is allowed between components.
-* **Azure Application Gateway with WAF**: The sole public entry point to the application. It acts as a Layer 7 load balancer and includes a **Web Application Firewall** to protect against common web vulnerabilities like SQL injection and cross-site scripting.
-* **Azure App Service**: Hosts the web application and is configured to only accept inbound traffic from the Application Gateway.
-* **Azure Database for PostgreSQL (or MySQL)**: The managed database service. It is deployed in a private subnet and is **not publicly accessible**.
-* **Azure Private Endpoint**: Creates a private, secure connection between the App Service and the database, routing traffic over the VNet instead of the public internet.
-* **Azure Key Vault**: Used for secure storage and management of sensitive information, such as the database connection string. The web application retrieves this secret at runtime, eliminating hardcoded credentials.
+### 🚀 CI/CD & Automation
 
-***
+We use two distinct **GitHub Actions** workflows to manage the project:
 
-### Security Implementations
+| Pipeline | Description | Trigger |
+| :--- | :--- | :--- |
+| **IaC Pipeline** | Provisions and updates all Azure infrastructure. | `push` to `terraform/` directory |
+| **App Pipeline** | Builds and deploys the web application to App Service. | `push` to `app/` directory |
 
-* **Principle of Least Privilege**: NSGs are strictly configured to allow only essential traffic. For example, the database subnet's NSG denies all inbound traffic except for the web application's subnet.
-* **Private Connectivity**: The database is fully isolated from the public internet. The web application connects to it securely using an Azure Private Endpoint. This is a critical security measure to prevent data exfiltration and unauthorized access.
-* **Web Application Firewall (WAF)**: The Application Gateway's WAF protects the application from a wide range of common threats, providing an additional layer of security at the application level.
-* **Secrets Management**: All sensitive data is stored in Azure Key Vault. The GitHub Actions pipeline and the application itself are configured to authenticate with Key Vault and retrieve secrets, preventing credentials from being stored in code or configuration files.
+[**Explore the latest pipeline runs here!**](https://github.com/your-username/Secure-Multi-tier-Web-App-Azure/actions)
 
-***
+---
 
-### CI/CD Pipeline with GitHub Actions
+### 🛠️ How to Deploy
 
-The project leverages two distinct GitHub Actions workflows to automate the deployment process:
+1.  **Prerequisites**:
+    * An active Azure subscription.
+    * **Azure CLI** and **Terraform** installed.
+2.  **Authentication**:
+    * Create an Azure Service Principal and add its credentials as repository secrets in GitHub (`AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, etc.).
+3.  **Clone the Repo**:
+    ```sh
+    git clone [https://github.com/Puneetsharmatech/Secure-Multi-tier-Web-App-Azure.git](https://github.com/puneetsharmatech/Secure-Multi-tier-Web-App-Azure.git)
+    ```
+4.  **Initiate Deployment**:
+    * Push your configured code to the `main` branch. The pipelines will automatically provision the infrastructure and deploy the application.
 
-1.  **IaC Pipeline (`terraform.yml`)**:
-    * **Trigger**: Pushes to the `main` branch and pull requests affecting the `terraform/` directory.
-    * **Jobs**: Automatically runs `terraform fmt`, `terraform validate`, `terraform plan`, and `terraform apply`.
-    * **Authentication**: Uses a dedicated Azure Service Principal with OpenID Connect (OIDC) for secure, secret-less authentication with Azure.
-    * **Status**: [![Terraform IaC](https://github.com/Puneet-web-dev/secure-multi-tier-web-app-azure/actions/workflows/terraform.yml/badge.svg)](https://github.com/Puneet-web-dev/secure-multi-tier-web-app-azure/actions/workflows/terraform.yml)
-
-2.  **Application Pipeline (`application.yml`)**:
-    * **Trigger**: Pushes to the `main` branch affecting the `application/` directory.
-    * **Jobs**: Builds the application code (e.g., a Docker image) and deploys it to the Azure App Service.
-    * **Status**: [![Application CI/CD](https://github.com/Puneet-web-dev/secure-multi-tier-web-app-azure/actions/workflows/application.yml/badge.svg)](https://github.com/Puneet-web-dev/secure-multi-tier-web-app-azure/actions/workflows/application.yml)
-
-***
-
-### How to Deploy and Test
-
-To deploy this project from scratch, you must have the Azure CLI and Terraform installed.
-
-1.  **Clone the Repository**:
-    `git clone https://github.com/Puneet-web-dev/secure-multi-tier-web-app-azure.git`
-
-2.  **Configure Azure Service Principal**:
-    * Run the Azure CLI commands provided in the project's documentation to create a Service Principal with a federated credential.
-    * Store the resulting `AZURE_CLIENT_ID`, `AZURE_SUBSCRIPTION_ID`, and `AZURE_TENANT_ID` as secrets in your GitHub repository.
-
-3.  **Create the Terraform State Backend**:
-    * Manually create the resource group, storage account, and blob container in Azure to store your Terraform state file.
-
-4.  **Trigger the Deployment**:
-    * Push your changes to the `main` branch. This will automatically trigger the `terraform.yml` workflow, which will provision all the Azure infrastructure.
-    * Once the infrastructure is ready, push your application code to trigger the `application.yml` workflow, which will build and deploy the application.
-
-5.  **Test the Application**:
-    * Once the deployment is complete, navigate to the public URL of the Application Gateway to access your web application.
-
-***
-
-### Repository Structure
-
+---
