@@ -43,7 +43,7 @@ We use two distinct **GitHub Actions** workflows to manage the project:
     * Create an Azure Service Principal and add its credentials as repository secrets in GitHub (`AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, etc.).
 3.  **Clone the Repo**:
     ```sh
-    git clone [https://github.com/your-username/Secure-Multi-tier-Web-App-Azure.git](https://github.com/your-username/Secure-Multi-tier-Web-App-Azure.git)
+    git clone [https://github.com/Puneetsharmatech/Secure-Multi-tier-Web-App-Azure.git](https://github.com/puneetsharmatech/Secure-Multi-tier-Web-App-Azure.git)
     ```
 4.  **Initiate Deployment**:
     * Push your configured code to the `main` branch. The pipelines will automatically provision the infrastructure and deploy the application.
