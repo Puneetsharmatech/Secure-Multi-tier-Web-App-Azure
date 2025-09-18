@@ -1,4 +1,4 @@
-# Debugging for terraform fmt step
+
 name: "Terraform IaC Pipeline"
 
 on:
