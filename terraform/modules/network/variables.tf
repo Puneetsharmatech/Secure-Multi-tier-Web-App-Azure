@@ -17,3 +17,7 @@ variable "web_subnet_name" {
 variable "database_subnet_name" {
   type = string
 }
+variable "vnet_id" {
+  description = "The ID of the Virtual Network."
+  type        = string
+}

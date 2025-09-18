@@ -30,3 +30,7 @@ variable "web_subnet_id" {
 variable "app_gateway_name" {
   type = string
 }
+variable "vnet_id" {
+  description = "The ID of the Virtual Network."
+  type        = string
+}
