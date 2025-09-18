@@ -59,14 +59,3 @@ resource "azurerm_subnet_network_security_group_association" "web_nsg_associatio
   network_security_group_id = azurerm_network_security_group.web_nsg.id
 }
 
-output "vnet_id" {
-  value = azurerm_virtual_network.vnet.id
-}
-
-output "web_subnet_id" {
-  value = azurerm_subnet.web.id
-}
-
-output "database_subnet_id" {
-  value = azurerm_subnet.database.id
-}
