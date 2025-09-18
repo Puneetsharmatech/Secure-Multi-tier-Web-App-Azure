@@ -11,6 +11,7 @@ This project demonstrates the design and deployment of a secure, highly-availabl
 Our application is a simple CRUD web app protected by a **Web Application Firewall (WAF)**. The database is secured with a **private endpoint**, ensuring it's never publicly accessible. All secrets are managed via **Azure Key Vault**.
 
 
+
 * **Azure Application Gateway**: Acts as the single public entry point with an integrated WAF.
 * **Virtual Network (VNet)**: Segments the network with dedicated subnets for the web and database tiers.
 * **Azure App Service**: Hosts the web application within a private subnet.
