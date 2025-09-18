@@ -11,7 +11,7 @@ variable "key_vault_name" {
 }
 
 variable "db_connection_string" {
-  type = string
+  type      = string
   sensitive = true
 }
 

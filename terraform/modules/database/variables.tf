@@ -19,6 +19,6 @@ variable "sql_admin_username" {
 }
 
 variable "sql_admin_password" {
-  type = string
+  type      = string
   sensitive = true
 }

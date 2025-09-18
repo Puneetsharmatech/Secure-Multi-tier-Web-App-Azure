@@ -26,8 +26,8 @@ resource "azurerm_resource_group" "main" {
 
 # Generate a random password for the database if one isn't provided
 resource "random_password" "db_password" {
-  length  = 16
-  special = true
+  length           = 16
+  special          = true
   override_special = "!#$"
 }
 
@@ -52,12 +52,12 @@ module "network" {
 module "database" {
   source = "./modules/database"
 
-  resource_group_name    = azurerm_resource_group.main.name
-  location               = azurerm_resource_group.main.location
-  sql_db_name            = var.sql_db_name
-  sql_server_name        = var.sql_server_name
-  sql_admin_username     = var.sql_admin_username
-  sql_admin_password     = random_password.db_password.result
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  sql_db_name         = var.sql_db_name
+  sql_server_name     = var.sql_server_name
+  sql_admin_username  = var.sql_admin_username
+  sql_admin_password  = random_password.db_password.result
 }
 
 # Call the security module

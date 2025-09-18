@@ -17,7 +17,7 @@ resource "azurerm_linux_web_app" "app" {
 
   site_config {
     application_stack {
-      docker_image = "multi-tier-app"
+      docker_image     = "multi-tier-app"
       docker_image_tag = "latest"
     }
   }
@@ -27,9 +27,9 @@ resource "azurerm_linux_web_app" "app" {
 
   app_settings = {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
-    "DOCKER_REGISTRY_SERVER_URL"        = "https://<your_acr_name>.azurecr.io"
-    "DOCKER_REGISTRY_SERVER_USERNAME"   = "<acr_username>"
-    "DOCKER_REGISTRY_SERVER_PASSWORD"   = "<acr_password>"
+    "DOCKER_REGISTRY_SERVER_URL"          = "https://<your_acr_name>.azurecr.io"
+    "DOCKER_REGISTRY_SERVER_USERNAME"     = "<acr_username>"
+    "DOCKER_REGISTRY_SERVER_PASSWORD"     = "<acr_password>"
     # App Setting for the database connection string, pointing to Key Vault
     "DB_CONNECTION_STRING" = "@Microsoft.KeyVault(SecretUri=${var.key_vault_secret_uri})"
   }
@@ -52,6 +52,6 @@ resource "azurerm_key_vault_access_policy" "key_vault_access" {
 
 # Link the App Service to the Application Gateway Backend Pool
 resource "azurerm_application_gateway_backend_address_pool_backend_address" "web_app_address" {
-  address                    = azurerm_linux_web_app.app.default_hostname
-  backend_address_pool_id    = var.application_gateway_id
+  address                 = azurerm_linux_web_app.app.default_hostname
+  backend_address_pool_id = var.application_gateway_id
 }

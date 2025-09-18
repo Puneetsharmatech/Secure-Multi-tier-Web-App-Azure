@@ -46,7 +46,7 @@ resource "azurerm_network_security_rule" "allow_app_gateway" {
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_range      = "80" # Standard HTTP port for the web app
+  destination_port_range      = "80"                      # Standard HTTP port for the web app
   source_address_prefix       = "AzureApplicationGateway" # Service Tag
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
