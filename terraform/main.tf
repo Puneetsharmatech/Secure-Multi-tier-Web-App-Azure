@@ -9,6 +9,7 @@ terraform {
   }
 }
 
+
 # Provider configuration for Azure
 provider "azurerm" {
   features {}
@@ -60,6 +61,7 @@ module "database" {
 }
 
 # Call the security module
+# debugginh
 module "security" {
   source = "./modules/security"
 
