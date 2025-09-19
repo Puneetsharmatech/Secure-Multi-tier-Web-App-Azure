@@ -17,14 +17,14 @@ resource "azurerm_linux_web_app" "app" {
   https_only          = true
 
   site_config {
-  #  application_stack {
-      # The provider requires at least one of these arguments to be specified.
-      # Since you're using Docker, you need these.
+    #  application_stack {
+    # The provider requires at least one of these arguments to be specified.
+    # Since you're using Docker, you need these.
 
 
-      #docker_image     = "multi-tier-app"
-      #docker_image_tag = "latest"
-   # }
+    #docker_image     = "multi-tier-app"
+    #docker_image_tag = "latest"
+    # }
   }
 
   virtual_network_subnet_id = var.web_subnet_id
