@@ -21,11 +21,13 @@ resource "azurerm_subnet" "web" {
 }
 
 resource "azurerm_subnet" "database" {
-  name                                      = var.database_subnet_name
-  resource_group_name                       = var.resource_group_name
-  virtual_network_name                      = azurerm_virtual_network.vnet.name
-  address_prefixes                          = ["10.0.2.0/24"]
-  private_endpoint_network_policies_enabled = true
+  name                 = var.database_subnet_name
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["10.0.2.0/24"]
+  
+  # Corrected argument for Private Endpoint network policies
+  private_endpoint_network_policies = "Enabled"
 }
 
 # --- CRITICAL NSG ADDITIONS FOR DATABASE ---

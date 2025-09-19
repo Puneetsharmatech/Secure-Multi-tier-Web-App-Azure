@@ -8,7 +8,7 @@ resource "azurerm_postgresql_flexible_server" "main" {
   administrator_password = var.sql_admin_password
 
   storage_mb = 32768           # 32 GB
-  sku_name   = "Standard_B1ms" # Basic tier for cost-effectiveness
+  sku_name   = "B_Standard_B1ms" # Basic tier for cost-effectiveness
   tags = {
     "project" = "Secure-Multi-tier-Web-App"
   }

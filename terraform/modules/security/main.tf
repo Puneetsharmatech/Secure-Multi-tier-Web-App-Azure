@@ -47,8 +47,8 @@ resource "azurerm_application_gateway" "main" {
   location            = var.location
 
   sku {
-    name     = "WAF_V2" # Includes WAF
-    tier     = "WAF_V2"
+    name     = "WAF_v2" # Includes WAF
+    tier     = "WAF_v2"
     capacity = 1
   }
 
