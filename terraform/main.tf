@@ -9,7 +9,6 @@ terraform {
   }
 }
 
-
 # Provider configuration for Azure
 provider "azurerm" {
   features {}
@@ -24,7 +23,7 @@ resource "azurerm_resource_group" "main" {
   location = var.location
 }
 
-# Generate a random password for the database if one isn't provided
+# Generate a random password for the database
 resource "random_password" "db_password" {
   length           = 16
   special          = true
@@ -32,7 +31,6 @@ resource "random_password" "db_password" {
 }
 
 # The database connection string that will be stored in Key Vault
-# Note: It's important to use the FQDN of the PostgreSQL server.
 locals {
   db_connection_string = "postgresql://${var.sql_admin_username}:${random_password.db_password.result}@${module.database.sql_server_name}.postgres.database.azure.com:5432/${module.database.sql_db_name}"
 }
@@ -61,7 +59,6 @@ module "database" {
 }
 
 # Call the security module
-# debugginh
 module "security" {
   source = "./modules/security"
 
