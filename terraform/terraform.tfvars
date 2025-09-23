@@ -1,4 +1,4 @@
-
+# terraform/terraform.tfvars
 
 web_app_name       = "puneet6551webbapp"
 sql_server_name    = "puneet6551sqlserver"
